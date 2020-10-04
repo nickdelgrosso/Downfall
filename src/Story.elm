@@ -6,7 +6,7 @@ import Set exposing (Set)
 
 type Story
     = EmptyStory
-    | WithFlaw String
+    | WithFlaw { flaw : String }
     | WithElements String String String String
     | CompleteStory
         { flaw : String
@@ -30,9 +30,9 @@ init =
     EmptyStory
 
 
-setFlaw : String -> Story -> Maybe Story
-setFlaw flaw story =
-    Just (WithFlaw (String.toLower flaw))
+setFlaw : String -> Story
+setFlaw flaw =
+    WithFlaw { flaw = String.toLower flaw }
 
 
 getFlaw : Story -> Maybe String
@@ -41,8 +41,7 @@ getFlaw story =
         EmptyStory ->
             Nothing
 
-        WithFlaw flaw ->
-            Just flaw
+        WithFlaw a -> Just a.flaw
 
         WithElements flaw _ _ _ ->
             Just flaw
@@ -54,7 +53,7 @@ getFlaw story =
 setElements : String -> String -> String -> Story -> Maybe Story
 setElements el1 el2 el3 story =
     case story of
-        WithFlaw flaw ->
+        WithFlaw {flaw} ->
             Just (WithElements flaw (String.toLower el1) (String.toLower el2) (String.toLower el3))
 
         _ ->

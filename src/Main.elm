@@ -21,7 +21,7 @@ type Msg
 update : Msg -> Model -> Model
 update msg model =
     case msg of 
-        SetFlaw flaw -> {model | story = Story.setFlaw flaw model.story |> Maybe.withDefault model.story}
+        SetFlaw flaw -> {model | story = Story.setFlaw flaw}
         SetElements el1 el2 el3 -> {model | story = Story.setElements el1 el2 el3 model.story |> Maybe.withDefault model.story}
 
 
